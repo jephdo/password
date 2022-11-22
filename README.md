@@ -8,14 +8,17 @@ This is a command line tool to generate random passwords. Passwords can be gener
 
 ## Usage
 
-To install
+To install:
 ```
 $ git clone git@github.com:jephdo/password.git
 $ cd password
-$ cargo install
+$ cargo build --release
+$ cp target/release/password $HOME/.cargo/bin/
+$ password pin
+9246
 ```
 
-For memorable passwords:
+To generate a memorable password:
 * `-n`, `--num-words` the number of words to randomly choose. Defaults to `3`
 * `-s`, `--separator` optional separator character to place in between words
 * `-c`, `--capitalize` randomly uppercase one of the words in the string
