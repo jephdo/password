@@ -2,12 +2,11 @@ use rand::distributions::{Alphanumeric, Uniform};
 use rand::prelude::SliceRandom;
 use rand::thread_rng;
 use rand::Rng;
-use std::io::BufRead;
 
-fn read_dictionary() -> Vec<String> {
-    let file = std::fs::File::open("dictionary.txt").expect("No such file");
-    let buf = std::io::BufReader::new(file);
-    buf.lines().map(|line| line.unwrap()).collect()
+fn read_dictionary<'a>() -> Vec<&'a str> {
+    let file_contents = include_str!("../dictionary.txt");
+
+    file_contents.split("\n").collect()
 }
 
 pub fn generate_xkcd(num_words: usize, separator: &str, capitalize: bool) -> String {
@@ -16,6 +15,7 @@ pub fn generate_xkcd(num_words: usize, separator: &str, capitalize: bool) -> Str
     let mut words: Vec<String> = lines
         .choose_multiple(&mut rand::thread_rng(), num_words)
         .cloned()
+        .map(String::from)
         .collect();
     if capitalize {
         let n = rand::thread_rng().gen_range(0..num_words);
